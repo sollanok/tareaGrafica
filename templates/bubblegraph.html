@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawSeriesChart);
+
+    function drawSeriesChart() {
+
+      // Cargar los datos
+      var datos = {{data_json|safe}}
+      // Length de las partidas del estudiante 1
+      var len1 = datos.niveles1.length
+      // Length de las partidas del estudiante 2
+      var len2 = datos.niveles2.length
+      // Títulos y inicio de array de dos dimensiones
+      var arrayDatos = [['Estudiante', 'Minutos jugados', 'Nivel', 'Grupo', 'Puntaje']]
+      // Array auxiliar
+      var arrayAux = []
+      
+      // Loop para llenar el array de datos con el estudiante 1
+      for (var i = 0; i < len1; i++) {
+        arrayAux.push(String(datos.estudiante1[0]))
+        arrayAux.push(parseInt(datos.minutos_jugados1[i]))
+        arrayAux.push(parseInt(datos.niveles1[i]))
+        arrayAux.push(String(datos.grupo1[0]))
+        arrayAux.push(parseInt(datos.puntajes1[i]))
+        arrayDatos.push(arrayAux)
+        arrayAux = []
+      }
+      
+      // Loop para llenar el array de datos con el estudiante 2
+      for (var i = 0; i < len2; i++) {
+        arrayAux.push(String(datos.estudiante2[0]))
+        arrayAux.push(parseInt(datos.minutos_jugados2[i]))
+        arrayAux.push(parseInt(datos.niveles2[i]))
+        arrayAux.push(String(datos.grupo2[0]))
+        arrayAux.push(parseInt(datos.puntajes2[i]))
+        arrayDatos.push(arrayAux)
+        arrayAux = []
+      }
+
+      // Todo lo que viene en el tutorial de google
+      var data = google.visualization.arrayToDataTable(arrayDatos);
+        
+      var options = {
+        title: 'Comparación de los minutos jugados en cada nivel con puntajes entre dos estudiantes de dos grupos.\n' +
+        ' X = Minutos jugados, Y = Nivel, Tamaño de burbuja = Puntaje, Color de burbuja = Grupo',
+        hAxis: {title: 'Minutos jugados'},
+        vAxis: {title: 'Nivel', viewWindow: {min: 0, max: 7}},
+        bubble: {textStyle: {fontSize: 11}},
+        colors: ['#D81E5B', '#331832'],
+      };
+      
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options)
+    
+    }
+    
+    </script>
+    </head>
+  <body>
+    <div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

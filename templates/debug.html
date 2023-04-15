@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bubblegraph Debug</title>
+</head>
+<body>
+    <h1>Bubblegraph Debug</h1>
+    <ul>
+        {% for item in data_json.nivel %}
+            <li>{{ item.0 }}</li>
+        {% endfor %}
+        {% for item in data_json.minutos_jugados %}
+            <li>{{ item.0 }}</li>
+        {% endfor %}
+        {% for item in data_json.puntaje %}
+            <li>{{ item.0 }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
